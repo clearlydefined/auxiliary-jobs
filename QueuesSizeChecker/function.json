@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "DailyTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 0 14 * * 1-5"
+    }
+  ]
+}

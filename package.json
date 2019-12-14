@@ -1,0 +1,10 @@
+{
+  "name": "auxiliary-jobs",
+  "version": "1.0.0",
+  "description": "ClearlyDefined auxiliary jobs",
+  "scripts": {
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
