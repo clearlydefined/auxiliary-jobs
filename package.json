@@ -5,6 +5,8 @@
   "scripts": {
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "@azure/storage-queue": "^12.0.1"
+  },
   "devDependencies": {}
 }
