@@ -3,12 +3,7 @@
 const { QueueServiceClient } = require('@azure/storage-queue');
 
 module.exports = async (context) => {
-  let insights = { trackEvent: context.log };
-  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
-    const appInsights = require('applicationinsights');
-    appInsights.setup().start();
-    insights = appInsights.defaultClient;
-  }
+  const insights = getInsights();
   const queueServiceClient = QueueServiceClient.fromConnectionString(process.env.STORAGE_CONNECTION_STRING);
   for await (const item of queueServiceClient.listQueues()) {
     const queueName = item.name;
@@ -18,3 +13,13 @@ module.exports = async (context) => {
     context.log('Queue', queueName, approximateMessagesCount);
   }
 };
+
+function getInsights() {
+  let insights = { trackEvent: context.log };
+  if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
+    const appInsights = require('applicationinsights');
+    appInsights.setup().start();
+    insights = appInsights.defaultClient;
+  }
+  return insights;
+}
