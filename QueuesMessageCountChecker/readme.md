@@ -1,6 +1,6 @@
 # TimerTrigger - JavaScript
 
-The `TimerTrigger` makes it incredibly easy to have your functions executed on a schedule. This sample demonstrates a simple use case of calling your function every 5 minutes.
+The `TimerTrigger` makes it incredibly easy to have your functions executed on a schedule.
 
 ## How it works
 
@@ -8,4 +8,4 @@ For a `TimerTrigger` to work, you provide a schedule in the form of a [cron expr
 
 ## Learn more
 
-<TODO> Documentation
+[Continuous deployment for Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-continuous-deployment)
