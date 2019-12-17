@@ -6,7 +6,8 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "@azure/storage-queue": "^12.0.1"
+    "@azure/storage-queue": "^12.0.1",
+    "applicationinsights": "^1.6.0"
   },
   "devDependencies": {}
 }
