@@ -6,7 +6,7 @@ module.exports = async (context) => {
   let insights = { trackEvent: context.log };
   if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
     const appInsights = require('applicationinsights');
-    appInsights.start();
+    appInsights.setup().start();
     insights = appInsights.defaultClient;
   }
   const queueServiceClient = QueueServiceClient.fromConnectionString(process.env.STORAGE_CONNECTION_STRING);
@@ -15,5 +15,6 @@ module.exports = async (context) => {
     const queueClient = queueServiceClient.getQueueClient(queueName);
     const { approximateMessagesCount } = await queueClient.getProperties();
     insights.trackEvent({ name: 'Queue message count', properties: { queueName, messageCount: approximateMessagesCount } });
+    context.log('Queue', queueName, approximateMessagesCount);
   }
 };
