@@ -5,7 +5,7 @@ let client = {};
 if (process.env.APPINSIGHTS_INSTRUMENTATIONKEY) {
   const appInsights = require('applicationinsights');
   appInsights.setup().start();
-  insights = appInsights.defaultClient;
+  client = appInsights.defaultClient;
 } else {
   client.trackEvent = console.log;
   client.trackTrace = console.log;
