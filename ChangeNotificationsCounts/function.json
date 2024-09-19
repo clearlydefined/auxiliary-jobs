@@ -1,0 +1,10 @@
+{
+  "bindings": [
+    {
+      "name": "HourlyTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "5 0-23 * * * 1-5"
+    }
+  ]
+}
