@@ -4,13 +4,19 @@ const insights = require('../shared/insights');
 module.exports = async (context) => {
   const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.STORAGE_CONNECTION_STRING);
   const containerName = 'changes-notifications';
+  const containerClient = blobServiceClient.getContainerClient(containerName);
 
   const now = new Date();
   const tenHoursAgo = new Date(now.getTime() - 10 * 60 * 60 * 1000);
-
   const changesetPath = getChangesetName(tenHoursAgo);
   context.log('changesetPath:', changesetPath);
-  const containerClient = blobServiceClient.getContainerClient(containerName);
+
+  results = await countCoordinatesInChangeset(context, containerClient, containerName, changesetPath);
+
+  insights.trackEvent(results);
+}
+
+async function countCoordinatesInChangeset(context, containerClient, containerName, changesetPath) {
   const blobClient = containerClient.getBlobClient(changesetPath);
 
   const downloadBlockBlobResponse = await blobClient.download(0);
@@ -18,8 +24,8 @@ module.exports = async (context) => {
   const allCoordinatesCount = downloadedContent.split('\n').length;
   const goCoordinatesCount = downloadedContent.split('\n').filter(line => line.startsWith('go/golang')).length;
 
-  insights.trackEvent({ name: 'Changeset coordinate count', properties: { containerName, changesetPath, allCoordinatesCount, goCoordinatesCount } });
   context.log('Container', containerName, 'Changeset', changesetPath, 'Coordinates Count', allCoordinatesCount, 'Go Coordinates Count', goCoordinatesCount);
+  return { name: 'Changeset coordinate count', properties: { containerName, changesetPath, allCoordinatesCount, goCoordinatesCount }};
 };
 
 function getChangesetName(date) {
